@@ -1,0 +1,356 @@
+ <!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Be My Valentine 💌</title>
+
+
+
+<style>
+
+    body {
+
+        margin: 0;
+
+        height: 100vh;
+
+        background: linear-gradient(135deg, #e1353b, #4d0404);
+
+        display: flex;
+
+        justify-content: center;
+
+        align-items: center;
+
+        font-family: 'Poppins', sans-serif;
+
+        overflow: hidden;
+
+    }
+
+    
+
+    /* Envelope Container */
+
+    .envelope-wrapper {
+
+        position: relative;
+
+        cursor: pointer;
+
+    }
+
+
+
+    .envelope {
+
+        position: relative;
+
+        width: 300px;
+
+        height: 200px;
+
+        background: #ad0423;
+
+        border-bottom-left-radius: 10px;
+
+        border-bottom-right-radius: 10px;
+
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+
+        border: 1px solid #ffffff;
+
+    }
+
+
+
+    /* The Flap */
+
+    .envelope::before {
+
+        content: "";
+
+        position: absolute;
+
+        top: 0;
+
+        left: 0;
+
+        z-index: 4;
+
+        border-left: 150px solid transparent;
+
+        border-right: 150px solid transparent;
+
+        border-top: 100px solid #ad0423;
+
+        transform-origin: top;
+
+        transition: transform 0.5s ease;
+
+    }
+
+
+
+    /* The Letter */
+
+    .letter {
+
+        position: absolute;
+
+        bottom: 10px;
+
+        left: 10px;
+
+        width: 280px;
+
+        height: 180px;
+
+        background: white;
+
+        text-align: center;
+
+        padding: 15px;
+
+        box-sizing: border-box;
+
+        z-index: 2;
+
+        transition: transform 0.6s ease;
+
+        border-radius: 5px;
+
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+
+    }
+
+
+
+    .letter h3 { color: #ff4d6d; margin-top: 5px; }
+
+    .letter p { font-size: 14px; color: #333;
+    margin-top: 50px; }
+
+
+
+    /* Open State */
+
+    .envelope-wrapper.open .envelope::before {
+
+        transform: rotateX(180deg);
+
+        z-index: 1; /* Move flap behind letter when open */
+
+    }
+
+
+
+    .envelope-wrapper.open .letter {
+
+        transform: translateY(-120px);
+
+        z-index: 3;
+
+    }
+
+
+
+    /* Buttons */
+
+    .buttons {
+
+        margin-top: 10px;
+
+        display: flex;
+
+        justify-content: center;
+
+        gap: 10px;
+
+    }
+
+
+
+    button {
+
+        padding: 8px 16px;
+
+        border: none;
+
+        border-radius: 20px;
+
+        font-size: 14px;
+
+        cursor: pointer;
+
+        transition: 0.3s;
+
+    }
+
+
+
+    #yesBtn { background: #ff4d6d; color: white; }
+
+    #yesBtn:hover { background: #ff758f; transform: scale(1.1); }
+
+
+
+    #noBtn {
+
+        background: #999;
+
+        color: white;
+
+        position: relative;
+
+        transition: 0.2s ease;
+
+    }
+
+
+
+    /* Success Message */
+
+    .success {
+
+        display: none;
+
+        text-align: center;
+
+        color: white;
+
+        background: rgba(255, 255, 255, 0.2);
+
+        padding: 40px;
+
+        border-radius: 20px;
+
+        backdrop-filter: blur(10px);
+
+        animation: fadeIn 1s ease;
+
+    }
+
+
+
+    @keyframes fadeIn {
+
+        from { opacity: 0; transform: scale(0.9); }
+
+        to { opacity: 1; transform: scale(1); }
+
+    }
+
+</style>
+
+</head>
+
+
+
+<body>
+<p></p>
+<img src="flower.png" alt="Heart Icon" style="position: absolute; top: 10px; align-items: center; width: 400px; height: 400px;">
+
+<div class="envelope-wrapper" id="wrapper" onclick="openEnvelope()">
+
+    <div class="envelope">
+
+        <div class="letter">
+
+            <h3> ❤️</h3>
+
+            <p></p>
+
+            <p><strong>Will you be my Valentine?</strong></p>
+
+
+
+            <div class="buttons">
+
+                <button id="yesBtn" onclick="sayYes(event)">YES 💖</button>
+
+                <button id="noBtn" onmouseover="moveNo(this)" onclick="moveNo(this)">NO 😜</button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<div class="success" id="successMessage">
+
+    <h1>💕 YAY HAPPY VALENTINE!!! 💕</h1>
+
+    <p>Thank you for being my Valentine.<br> I’m so lucky to have you by my side. Sorry kung inani lang sa akong ma hatag rn🌹 <br>HEHEHHEHE"</p>
+
+    <hr style="border: 0.5px solid white; opacity: 0.3;">
+
+    <p><strong>Mwamwaaaa ka sa akinnn</strong><br>LAB u LAng Mwaaaaaaaaaaaa!!! ❤️</p>
+
+</div>
+
+
+
+<script>
+
+function openEnvelope() {
+
+    document.getElementById("wrapper").classList.add("open");
+
+}
+
+
+
+function moveNo(btn) {
+
+    // Stop the envelope from closing if we click the button
+
+    event.stopPropagation();
+
+   
+
+    // Generate random positions
+
+    const x = Math.random() * (window.innerWidth - btn.offsetWidth) - (window.innerWidth / 2);
+
+    const y = Math.random() * (window.innerHeight - btn.offsetHeight) - (window.innerHeight / 2);
+
+   
+
+    btn.style.position = 'fixed';
+
+    btn.style.left = Math.random() * 80 + '%';
+
+    btn.style.top = Math.random() * 80 + '%';
+
+}
+
+
+
+function sayYes(event) {
+
+    event.stopPropagation();
+
+    document.getElementById("wrapper").style.display = "none";
+
+    document.getElementById("successMessage").style.display = "block";
+
+}
+
+</script>
+
+
+
+</body>
+
+</html>
